@@ -1,15 +1,15 @@
 package source;
 
-import com.example.schooltest1.R;
-
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.schooltest1.R;
 
 public class MerlinCore1 extends Activity {
 
@@ -59,7 +59,7 @@ public class MerlinCore1 extends Activity {
 //		theGames[1] = new TicTacToe(this);
 		theGames[2] = new Sequencer(this);
 //		theGames[3] = new Echo(this);
-//		theGames[4] = new BlackJack13(this);
+		theGames[4] = new BlackJack13(this);
 		theGames[5] = new MagicSquare(this);
 		theGames[6] = new Mindbender(this);
 //		theGames[7] = new WhackAMole(this);
