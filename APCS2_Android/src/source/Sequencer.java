@@ -1,10 +1,10 @@
 package source;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 public class Sequencer implements Game {
 
@@ -13,6 +13,8 @@ public class Sequencer implements Game {
 	private boolean playingBack = false;
 
 	private ArrayList<Integer> buttonSequence = new ArrayList<Integer>();
+	
+	private int waitTime = 500;
 
 	public Sequencer(MerlinCore1 core) {
 		this.core = core;
@@ -27,23 +29,23 @@ public class Sequencer implements Game {
 	@Override
 	public void clickProcessor(int num) {
 		if (!playingBack) {
-			playBeep(num);
-			flashButton(num);
+			playButton(num);
 			buttonSequence.add(num);
 		}
 	}
 	
-	public void flashButton(final int num) {
+	public void playButton(final int num) {
 		new AsyncTask<Void, Void, Void>() {
 			@Override
 			protected void onPreExecute() {
 				core.buttonOn(num);
+				playBeep(num);
 			}
 			
 			@Override
 			protected Void doInBackground(Void... params) {
 				try {
-					Thread.sleep(500);
+					Thread.sleep(waitTime);
 				} catch (InterruptedException e) {}
 				return null;
 			}
@@ -61,7 +63,7 @@ public class Sequencer implements Game {
 	 * @param num
 	 */
 	private void playBeep(int num) {
-//		MediaPlayer mp;
+		MediaPlayer mp = null;
 //		switch (num) {
 //			case 0 : mp = MediaPlayer.create(core, R.raw./*Each of these need audio files in res/raw*/ );
 //			case 1 : mp = MediaPlayer.create(core, R.raw./*Each of these need audio files in res/raw*/ );
@@ -75,46 +77,58 @@ public class Sequencer implements Game {
 //			case 9 : mp = MediaPlayer.create(core, R.raw./*Each of these need audio files in res/raw*/ );
 //			case 10: mp = MediaPlayer.create(core, R.raw./*Each of these need audio files in res/raw*/ );
 //		}
-//		mp.start();
+		if (mp != null) mp.start();
 	}
 
 	@Override
 	public void controlProcessor(int num) {
 		if (num == 102) {
-			playBackOneStep();
+			playBack();
 		} else if (num == 103) {
-			playBackOneStep();
+			playBack();
 		}
 	}
+	
+	private boolean playBackStarted = false;
+	private Iterator<Integer> iterator = null;
+	
+	private void playBack() {
+		if (!playBackStarted) {
+			iterator = buttonSequence.iterator();
+			this.playingBack = true;
+			this.playBackStarted = true;
+		}
+//		Toast.makeText(core, Boolean.toString(iterator.hasNext()), Toast.LENGTH_SHORT).show();
+		if (iterator.hasNext()) {
+			new AsyncTask<Void, Void, Void>() {
 
-	private void playBackOneStep() 
-	{
-//		new AsyncTask<Integer, Void, Void>() {
-//			
-//			@Override
-//			protected void onPreExecute() {
-//				Sequencer.this.playingBack = true;
-//			}
-//			
-//			@Override
-//			protected Void doInBackground(Integer... params) {
-//				for (Integer i : params) {
-//					playBeep(i);
-//					try {
-//						Thread.sleep(500);
-//					} catch (InterruptedException e) {}
-//				}
-//				return null;
-//			}
-//			
-//			@Override
-//			protected void onPostExecute(Void result) 
-//			{
-//				Sequencer.this.playingBack = false;
-//				Sequencer.this.buttonSequence.clear();
-//			}
-//			
-//		}.execute(this.buttonSequence);
+				@Override
+				protected void onPreExecute() {
+					int i = iterator.next();
+//					Toast.makeText(core, Integer.toString(i), Toast.LENGTH_SHORT).show();
+					playButton(i);
+				}
+				
+				@Override
+				protected Void doInBackground(Void... params) {
+					try {
+						Thread.sleep(waitTime);
+					} catch (InterruptedException e) {}
+					return null;
+				}
+				
+				@Override
+				protected void onPostExecute(Void result) {
+					playBack();
+				}
+				
+			}.execute();
+			
+			
+		} else {
+			playingBack = false;
+			playBackStarted = false;
+		}
 	}
 
 }
