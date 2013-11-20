@@ -98,14 +98,12 @@ public class Sequencer implements Game {
 			this.playingBack = true;
 			this.playBackStarted = true;
 		}
-//		Toast.makeText(core, Boolean.toString(iterator.hasNext()), Toast.LENGTH_SHORT).show();
 		if (iterator.hasNext()) {
 			new AsyncTask<Void, Void, Void>() {
 
 				@Override
 				protected void onPreExecute() {
 					int i = iterator.next();
-//					Toast.makeText(core, Integer.toString(i), Toast.LENGTH_SHORT).show();
 					playButton(i);
 				}
 				
