@@ -3,6 +3,8 @@ package source;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.example.schooltest1.R;
+
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 
@@ -64,19 +66,19 @@ public class Sequencer implements Game {
 	 */
 	private void playBeep(int num) {
 		MediaPlayer mp = null;
-//		switch (num) {
-//			case 0 : mp = MediaPlayer.create(core, R.raw./*Each of these need audio files in res/raw*/ );
-//			case 1 : mp = MediaPlayer.create(core, R.raw./*Each of these need audio files in res/raw*/ );
-//			case 2 : mp = MediaPlayer.create(core, R.raw./*Each of these need audio files in res/raw*/ );
-//			case 3 : mp = MediaPlayer.create(core, R.raw./*Each of these need audio files in res/raw*/ );
-//			case 4 : mp = MediaPlayer.create(core, R.raw./*Each of these need audio files in res/raw*/ );
-//			case 5 : mp = MediaPlayer.create(core, R.raw./*Each of these need audio files in res/raw*/ );
-//			case 6 : mp = MediaPlayer.create(core, R.raw./*Each of these need audio files in res/raw*/ );
-//			case 7 : mp = MediaPlayer.create(core, R.raw./*Each of these need audio files in res/raw*/ );
-//			case 8 : mp = MediaPlayer.create(core, R.raw./*Each of these need audio files in res/raw*/ );
-//			case 9 : mp = MediaPlayer.create(core, R.raw./*Each of these need audio files in res/raw*/ );
-//			case 10: mp = MediaPlayer.create(core, R.raw./*Each of these need audio files in res/raw*/ );
-//		}
+		switch (num) {
+			case 0 : mp = MediaPlayer.create(core, R.raw.beep_0);
+			case 1 : mp = MediaPlayer.create(core, R.raw.beep_1);
+			case 2 : mp = MediaPlayer.create(core, R.raw.beep_2);
+			case 3 : mp = MediaPlayer.create(core, R.raw.beep_3);
+			case 4 : mp = MediaPlayer.create(core, R.raw.beep_4);
+			case 5 : mp = MediaPlayer.create(core, R.raw.beep_5);
+			case 6 : mp = MediaPlayer.create(core, R.raw.beep_6);
+			case 7 : mp = MediaPlayer.create(core, R.raw.beep_7);
+			case 8 : mp = MediaPlayer.create(core, R.raw.beep_8);
+			case 9 : mp = MediaPlayer.create(core, R.raw.beep_9);
+			case 10: mp = MediaPlayer.create(core, R.raw.beep_10);
+		}
 		if (mp != null) mp.start();
 	}
 
