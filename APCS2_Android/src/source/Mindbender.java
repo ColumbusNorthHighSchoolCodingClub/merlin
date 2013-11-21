@@ -43,35 +43,23 @@ public class Mindbender implements Game
 		
 		if(start)
 		{
-			switch (number)	{
-				case 1 : length = 1; mc1.makeToast("Difficulty: " + length); break;
-				case 2 : length = 2; mc1.makeToast("Difficulty: " + length); break;
-				case 3 : length = 3; mc1.makeToast("Difficulty: " + length); break;
-				case 4 : length = 4; mc1.makeToast("Difficulty: " + length); break;
-				case 5 : length = 5; mc1.makeToast("Difficulty: " + length); break;
-				case 6 : length = 6; mc1.makeToast("Difficulty: " + length); break;
-				case 7 : length = 7; mc1.makeToast("Difficulty: " + length); break;
-				case 8 : length = 8; mc1.makeToast("Difficulty: " + length); break;
-				case 9 : length = 9; mc1.makeToast("Difficulty: " + length); break;
+			if(number != 0 && number != 10) {
+				length = number;
+				mc1.makeToast("Difficulty: " + length);
 			}
+			
 			randomStart();	
 			start = false;
 		}
 		else
-		{			
-			switch (number)	{
-				case 0 : guess += "0"; mc1.makeToast(guess); break;
-				case 1 : guess += "1"; mc1.makeToast(guess); break;
-				case 2 : guess += "2"; mc1.makeToast(guess); break;
-				case 3 : guess += "3"; mc1.makeToast(guess); break;
-				case 4 : guess += "4"; mc1.makeToast(guess); break;
-				case 5 : guess += "5"; mc1.makeToast(guess); break;
-				case 6 : guess += "6"; mc1.makeToast(guess); break;
-				case 7 : guess += "7"; mc1.makeToast(guess); break;
-				case 8 : guess += "8"; mc1.makeToast(guess); break;
-				case 9 : guess += "9"; mc1.makeToast(guess); break;
+		{		
+			
+			if(number != 0 && number != 10) {
+				
+				guess += "" + number;
+				mc1.makeToast(guess);
 			}
-		
+			
 			if(guess.length() == length)
 			{
 				rounds++;
