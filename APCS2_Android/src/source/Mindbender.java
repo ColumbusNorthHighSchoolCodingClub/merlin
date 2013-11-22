@@ -54,7 +54,7 @@ public class Mindbender implements Game
 		else
 		{		
 			
-			if(number != 0 && number != 10) {
+			if(number != 10) {
 				
 				guess += "" + number;
 				mc1.makeToast(guess);
