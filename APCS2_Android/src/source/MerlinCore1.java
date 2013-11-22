@@ -56,7 +56,7 @@ public class MerlinCore1 extends Activity {
 	public void setupGameArray()
 	{
 //		theGames[0]
-//		theGames[1] = new TicTacToe(this);
+		theGames[1] = new TicTacToe(this);
 		theGames[2] = new Sequencer(this);
 //		theGames[3] = new Echo(this);
 		theGames[4] = new BlackJack13(this);
@@ -68,8 +68,8 @@ public class MerlinCore1 extends Activity {
 	
 	public void clickProcessor(int buttonNum)
 	{
-		debugToast("Pressed #"+buttonNum);
-		flashing[buttonNum] = true;
+//		debugToast("Pressed #"+buttonNum);
+//		flashing[buttonNum] = true;
 		
 		if(newGamePending)
 		{
