@@ -132,14 +132,17 @@ public class TicTacToe  implements Game
 	{
 		int selection = 0;
 		int [] bestSpots={1,3,5,7,9};
+		int[] edgeSpots={2,4,6,8};
 		if(canWin()){selection=win();}
 		else
 			if(oppCanWin()){selection=blockOtherPlayer();}
 			else 
 				if(!spotTaken(5))selection=5;
 				else 
-					if(!allTaken(bestSpots)){selection=chooseRandomSpot(bestSpots);}
-					else {chooseRandomSpot();}
+					if(potentialLoss()){selection=chooseRandomSpot(edgeSpots);}
+					else
+						if(!allTaken(bestSpots)){selection=chooseRandomSpot(bestSpots);}
+						else {chooseRandomSpot();}
 
 
 		if(selection==0)selection=chooseRandomSpot();		
@@ -256,6 +259,20 @@ public class TicTacToe  implements Game
 		}		
 		return win;
 	}
+	public boolean potentialLoss()
+	{
+		boolean[]s1=spots1;
+		boolean[]s2=spots2;
+		int count=0;
+		for(int x=0;x<s1.length;x++)
+			if(s1[x])count++;
+		if(!player1)
+		{
+			if(s1[0]&&s1[8]&&s2[4]&&count==2)return true;
+			if(s1[2]&&s1[6]&&s2[4]&&count==2)return true;
+		}			
+		return false;
+	}
 	public int blockOtherPlayer()
 	{
 		int[][] places=placesTaken();
@@ -280,8 +297,7 @@ public class TicTacToe  implements Game
 				}								
 								
 			}
-		}
-		
+		}		
 		if(!player1)
 		{
 			for(int group=0;group<8;group++)
@@ -426,8 +442,6 @@ public class TicTacToe  implements Game
 		if(game1())mc1.makeToast("Player 1 Wins!");
 		if(game2())mc1.makeToast("Player 2 Wins!");
 		if(tie())mc1.makeToast("The game is tied!");
-
-
 	}
 
 	@Override
