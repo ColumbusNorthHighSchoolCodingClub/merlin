@@ -58,7 +58,7 @@ public class MerlinCore1 extends Activity {
 //		theGames[0]
 		theGames[1] = new TicTacToe(this);
 		theGames[2] = new Sequencer(this);
-//		theGames[3] = new Echo(this);
+		theGames[3] = new Echo(this);
 		theGames[4] = new BlackJack13(this);
 		theGames[5] = new MagicSquare(this);
 		theGames[6] = new Mindbender(this);

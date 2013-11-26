@@ -6,24 +6,9 @@ import java.util.Random;
 
 public class TicTacToe  implements Game
 {
-	private boolean a1;
-	private boolean a2;
-	private boolean a3;
-	private boolean a4;
-	private boolean a5;
-	private boolean a6;
-	private boolean a7;
-	private boolean a8;
-	private boolean a9;
-	private boolean b1;
-	private boolean b2;
-	private boolean b3;
-	private boolean b4;
-	private boolean b5;
-	private boolean b6;
-	private boolean b7;
-	private boolean b8;
-	private boolean b9;
+
+	private boolean []spots1=new boolean[9];
+	private boolean []spots2=new boolean[9];
 	private boolean player1;
 	private int [] places={0,0,0,0,0,0,0,0,0};
 	public MerlinCore1 mc1;
@@ -39,24 +24,7 @@ public class TicTacToe  implements Game
 	
 	public boolean spotTaken(int spot)
 	{
-		if(spot==1&&a1)return true;
-		if(spot==2&&a2)return true;
-		if(spot==3&&a3)return true;
-		if(spot==4&&a4)return true;
-		if(spot==5&&a5)return true;
-		if(spot==6&&a6)return true;
-		if(spot==7&&a7)return true;
-		if(spot==8&&a8)return true;
-		if(spot==9&&a9)return true;
-		if(spot==1&&b1)return true;
-		if(spot==2&&b2)return true;
-		if(spot==3&&b3)return true;
-		if(spot==4&&b4)return true;
-		if(spot==5&&b5)return true;
-		if(spot==6&&b6)return true;
-		if(spot==7&&b7)return true;
-		if(spot==8&&b8)return true;
-		if(spot==9&&b9)return true;
+		if(spots1[spot-1]||spots2[spot-1])return true;
 		return false;
 	}
 	
@@ -76,27 +44,16 @@ public class TicTacToe  implements Game
 		{
 			if (player1) 
 			{
-				if (spot == 1){a1 = true;mc1.buttonOn(spot);places[0]=1;}
-				if (spot == 2){a2 = true;mc1.buttonOn(spot);places[1]=1;}
-				if (spot == 3){a3 = true;mc1.buttonOn(spot);places[2]=1;}
-				if (spot == 4){a4 = true;mc1.buttonOn(spot);places[3]=1;}
-				if (spot == 5){a5 = true;mc1.buttonOn(spot);places[4]=1;}
-				if (spot == 6){a6 = true;mc1.buttonOn(spot);places[5]=1;}
-				if (spot == 7){a7 = true;mc1.buttonOn(spot);places[6]=1;}
-				if (spot == 8){a8 = true;mc1.buttonOn(spot);places[7]=1;}
-				if (spot == 9){a9 = true;mc1.buttonOn(spot);places[8]=1;}
+				spots1[spot-1]=true;
+				mc1.buttonOn(spot);
+				places[spot-1]=1;
 			}
 			else 
 			{
-				if (spot == 1){b1 = true;mc1.buttonFlash(spot);places[0]=2;}
-				if (spot == 2){b2 = true;mc1.buttonFlash(spot);places[1]=2;}
-				if (spot == 3){b3 = true;mc1.buttonFlash(spot);places[2]=2;}
-				if (spot == 4){b4 = true;mc1.buttonFlash(spot);places[3]=2;}
-				if (spot == 5){b5 = true;mc1.buttonFlash(spot);places[4]=2;}
-				if (spot == 6){b6 = true;mc1.buttonFlash(spot);places[5]=2;}
-				if (spot == 7){b7 = true;mc1.buttonFlash(spot);places[6]=2;}
-				if (spot == 8){b8 = true;mc1.buttonFlash(spot);places[7]=2;}
-				if (spot == 9){b9 = true;mc1.buttonFlash(spot);places[8]=2;}
+				
+				spots2[spot-1]=true;
+				mc1.buttonFlash(spot);
+				places[spot-1]=2;
 			}
 			
 			switchPLayer();
@@ -104,26 +61,31 @@ public class TicTacToe  implements Game
 	}
 	public boolean game1()
 	{
-		if(a1&&a2&&a3)return true;if(a4&&a1&&a7)return true;if(a7&&a5&&a3)return true;
-		if(a4&&a5&&a6)return true;if(a8&&a5&&a2)return true;if(a9&&a5&&a1)return true;
-		if(a7&&a8&&a9)return true;if(a3&&a9&&a6)return true;
+		boolean[] s=spots1;
+		if(s[0]&&s[1]&&s[2])return true;if(s[3]&&s[0]&&s[6])return true;if(s[6]&&s[4]&&s[2])return true;
+		if(s[3]&&s[4]&&s[5])return true;if(s[7]&&s[4]&&s[1])return true;if(s[8]&&s[4]&&s[0])return true;
+		if(s[6]&&s[7]&&s[8])return true;if(s[2]&&s[8]&&s[5])return true;
 		
 		return false;
 	}
 	
 	public boolean game2()
 	{
-		if(b1&&b2&&b3)return true;if(b4&&b1&&b7)return true;if(b7&&b5&&b3)return true;
-		if(b4&&b5&&b6)return true;if(b8&&b5&&b2)return true;if(b9&&b5&&b1)return true;
-		if(b7&&b8&&b9)return true;if(b3&&b9&&b6)return true;
+		boolean[] s=spots2;
+		if(s[0]&&s[1]&&s[2])return true;if(s[3]&&s[0]&&s[6])return true;if(s[6]&&s[4]&&s[2])return true;
+		if(s[3]&&s[4]&&s[5])return true;if(s[7]&&s[4]&&s[1])return true;if(s[8]&&s[4]&&s[0])return true;
+		if(s[6]&&s[7]&&s[8])return true;if(s[2]&&s[8]&&s[5])return true;
 		
 		return false;
 	}
 	
 	public boolean tie()
 	{
-		if((a1||b1)&&(a2||b2)&&(a3||b3)&&(a4||b4)&&(a5||b5)&&(a6||b6)
-		&&(a7||b7)&&(a8||b8)&&(a9||b9)&&!game1()&&!game2())return true;
+		boolean[] p1=spots1;
+		boolean[]p2=spots2;
+		
+		if((p1[0]||p2[0])&&(p1[1]||p2[1])&&(p1[2]||p2[2])&&(p1[3]||p2[3])&&(p1[4]||p2[4])&&(p1[5]||p2[5])
+				&&(p1[6]||p2[6])&&(p1[7]||p2[7])&&(p1[8]||p2[8])&&!game1()&&!game2())return true;		
 		
 		return false;		
 	}
@@ -395,13 +357,18 @@ public class TicTacToe  implements Game
 	}
 	public boolean[] gridStatus1()
 	{
-		boolean[] status={a1,a2,a3,a4,a5,a6,a7,a8,a9};
+		boolean[]status=new boolean[9];
+		for(int x=0;x<spots1.length;x++)
+			status[x]=spots1[x];
+		
 		return status;
 	}
 	
 	public boolean[] gridStatus2()
 	{
-		boolean[] status={b1,b2,b3,b4,b5,b6,b7,b8,b9};
+		boolean[]status=new boolean[9];
+		for(int x=0;x<spots2.length;x++)
+			status[x]=spots2[x];		
 		return status;
 	}
 	
@@ -443,8 +410,12 @@ public class TicTacToe  implements Game
 	@Override
 	public void startGame() 
 	{
-		a1=false;a2=false;a3=false;a4=false;a5=false;a6=false;a7=false;a8=false;a9=false;
-		b1=false;b2=false;b3=false;b4=false;b5=false;b6=false;b7=false;b8=false;b9=false;
+		for(int x=0;x<9;x++)
+			{
+				spots1[x]=false;
+				spots2[x]=false;
+			}
+		
 		player1=true;
 	}
 
