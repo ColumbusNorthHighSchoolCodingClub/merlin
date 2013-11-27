@@ -96,9 +96,9 @@ public class BlackJack13 implements Game
 		if(winner.equals(player)) nextChips++;
 		else if(winner.equals(computer)) nextChips--;
 		
-		if(playerChips < 0 || playerChips >= 10) {
+		if(playerChips == 0 || playerChips >= 10) {
 			
-			if(playerChips < 0) mc1.makeToast("The Computer Won the Game!");
+			if(playerChips == 0) mc1.makeToast("The Computer Won the Game!");
 			else  mc1.makeToast("You Won the Game!");
 			
 			endGame();
@@ -143,8 +143,8 @@ public class BlackJack13 implements Game
 			devMode = !devMode;
 			
 			//Decide which toast bread to toast
-			if(devMode) mc1.makeToast("BJ13 DevMode: Activited");
-			else mc1.makeToast("BJ13 DevMode: Deactivited");
+			if(devMode) mc1.makeToast("BJ13 DevMode: Activated");
+			else mc1.makeToast("BJ13 DevMode: Deactivated");
 			return;
 		}
 		
@@ -180,7 +180,7 @@ public class BlackJack13 implements Game
 
 	private void chipPreview(final int l) {
 		
-		if(l == 0) mc1.resetButtons();
+		if(l == 0) BlackJack13.this.mc1.resetButtons();
 		
 		new AsyncTask<Void, Void, Void>() {
 
@@ -188,23 +188,25 @@ public class BlackJack13 implements Game
 	
 			@Override
 			protected Void doInBackground(Void... params) {
-				
+								
 				if(loop == 0) 
-					mc1.buttonFlash(playerChips);
+					BlackJack13.this.mc1.buttonFlash(BlackJack13.this.playerChips);
 						
 				if(loop == 20) {
 					
-					if(playerChips == nextChips) {
+					if(BlackJack13.this.playerChips == BlackJack13.this.nextChips) {
 							
-						mc1.buttonOff(playerChips);
+						BlackJack13.this.mc1.buttonOff(BlackJack13.this.playerChips);
 						loop = 40;
 						return null;
 					}
 					
-					mc1.buttonOff(playerChips);
-					mc1.buttonFlash(nextChips);
+					BlackJack13.this.mc1.buttonOff(BlackJack13.this.playerChips);
+					BlackJack13.this.mc1.buttonFlash(BlackJack13.this.nextChips);
 					
-					playerChips = nextChips;
+					
+					
+					BlackJack13.this.playerChips = BlackJack13.this.nextChips;
 				}
 				
 				loop++;
@@ -216,12 +218,12 @@ public class BlackJack13 implements Game
 			protected void onPostExecute(Void result) {
 			
 				if(loop >= 40) {
-					mc1.buttonOff(nextChips);
-					mc1.buttonOff(playerChips);
+					BlackJack13.this.mc1.buttonOff(BlackJack13.this.nextChips);
+					BlackJack13.this.mc1.buttonOff(BlackJack13.this.playerChips);
 					
-					startRound();
+					BlackJack13.this.startRound();
 				} else 
-					chipPreview(loop);
+					BlackJack13.this.chipPreview(loop);
 			}
 			
 		}.execute();
