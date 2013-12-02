@@ -16,6 +16,10 @@ public class Echo implements Game
 	public int clickCounter;
 	public int score;
 	boolean endGame;
+
+	boolean allowClicking;
+	int canClick;
+	int offCount=0;
 	
 	
 	public Echo(MerlinCore1 core)
@@ -32,6 +36,7 @@ public class Echo implements Game
 		score = -1;
 		mc1.resetButtons();
 		buttonSequence = getButtonSequence(level/2);
+		canClick = 0;
 		flashRandomButtons(buttonSequence);
 	}
 	
@@ -40,10 +45,20 @@ public class Echo implements Game
 	{
 		if(endGame == true)
 			return;
+//		if(allowClicking == true)
+//		if(offCount == getNumOfTimesButtonAppears(buttonSequence))
+		if(canClick == buttonSequence.size())
+		{
+//			if(isYourTurn == true)
+//			{
+//			mc1.makeToast("Your Turn");
+//			isYourTurn = false;
+//			}
 		clickCounter++;
 		score++;
 //		mc1.makeToast("Clicked "+Integer.toString(clickCounter)+" times");//debug
 		checkClicks(number);
+		}
 //		mc1.makeToast(Integer.toString(number));//debug
 	}
 
@@ -66,6 +81,7 @@ public class Echo implements Game
 	
 	public void flashRandomButtons(ArrayList<Integer> sequence)
 	{
+//		allowClicking = false;
 		for(int i=0; i<sequence.size();i++)
 		{
 //			String s = "";//debug
@@ -73,11 +89,11 @@ public class Echo implements Game
 //			mc1.buttonOff(sequence.get(i));
 //			s = sequence.get(i).toString();//debug
 //			mc1.makeToast(s);//debug
-			turnButtonOn(sequence.get(i),250);
-			turnButtonOff(sequence.get(i),750);
+			turnButtonOn(sequence.get(i),250);//off time is 250ms
+			turnButtonOff(sequence.get(i),750);//on time is 750ms
 			mc1.buttonOff(sequence.get(i));
 		}
-		mc1.makeToast("Your Turn");
+//		allowClicking = true;
 	}
 	
 	public void checkClicks(int numberClicked)
@@ -90,7 +106,7 @@ public class Echo implements Game
 //			mc1.makeToast("You lose get clickcounter: "+Integer.toString(buttonSequence.get(clickCounter-1)));//debug
 			endGame = true;
 		}
-		if(buttonSequence.size() == clickCounter)
+		if(buttonSequence.size() == clickCounter && endGame == false)
 		{
 			mc1.makeToast("Level Up!");
 //			mc1.makeToast("Size of sequence: "+Integer.toString(buttonSequence.size()));//debug
@@ -98,6 +114,7 @@ public class Echo implements Game
 			clickCounter = 0;
 			mc1.resetButtons();
 			buttonSequence = getButtonSequence(level/2);
+			canClick = 0;
 			flashRandomButtons(buttonSequence);
 		}
 	}
@@ -148,7 +165,40 @@ public class Echo implements Game
 			protected void onPostExecute(Void result)
 			{
 				mc1.buttonOff(button);
+				canClick++;
+				if(canClick == buttonSequence.size())
+					mc1.makeToast("Your Turn");
+//				allowClicking = true;
 			}
 		}.execute();
 	}
+	
+//	public boolean isYourTurn()
+//	{
+//		
+//	}
+	
+//	public boolean isAtEndOfSequence(ArrayList<Integer> sequence)
+//	{
+//		int lastButton = sequence.get(sequence.size()-1);//check this later
+//		int numOfTimesButtonAppears=0;
+//		for(int i=0; i<sequence.size();i++)
+//		{
+//			if(sequence.get(i) == lastButton)
+//				numOfTimesButtonAppears++;
+//		}
+//		return false;
+//	}
+//	
+//	public int getNumOfTimesButtonAppears(ArrayList<Integer> sequence)
+//	{
+//		int lastButton = sequence.get(sequence.size()-1);//check this later
+//		int numOfTimesButtonAppears=0;
+//		for(int i=0; i<sequence.size();i++)
+//		{
+//			if(sequence.get(i) == lastButton)
+//				numOfTimesButtonAppears++;
+//		}
+//		return numOfTimesButtonAppears;
+//	}
 }
