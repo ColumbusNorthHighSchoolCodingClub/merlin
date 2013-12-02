@@ -6,10 +6,11 @@ import java.util.Random;
 
 public class TicTacToe  implements Game
 {
-
+	Random randal=new Random();
 	private boolean []spots1=new boolean[9];
 	private boolean []spots2=new boolean[9];
 	private boolean player1;
+	private boolean shouldGoEasy;
 	private int [] places={0,0,0,0,0,0,0,0,0};
 	public MerlinCore1 mc1;
 	public TicTacToe(MerlinCore1 core)
@@ -128,7 +129,7 @@ public class TicTacToe  implements Game
 		if(taken==spots.length)return true;
 		return false;
 	}
-	public int chooseSpot()
+	public int chooseProSpot()
 	{
 		int selection = 0;
 		int [] bestSpots={1,3,5,7,9};
@@ -145,6 +146,32 @@ public class TicTacToe  implements Game
 						else {chooseRandomSpot();}
 
 
+		if(selection==0)selection=chooseRandomSpot();		
+		return selection;
+	}
+	
+	public int chooseEasySpot()
+	{
+		int selection = 0;
+		int [] bestSpots={1,3,5,7,9};
+		int[] edgeSpots={2,4,6,8};
+		int luck=randal.nextInt(10);
+		if(luck==2||luck==3||luck==4)
+		{
+			chooseRandomSpot();			
+		}
+		else
+		{	
+			if(canWin()){selection=win();}
+			else
+				if(oppCanWin()){selection=blockOtherPlayer();}
+				else 
+					if(!spotTaken(5))selection=5;
+					else 						
+						if(!allTaken(bestSpots)){selection=chooseRandomSpot(bestSpots);}
+						else {chooseRandomSpot();}
+
+		}
 		if(selection==0)selection=chooseRandomSpot();		
 		return selection;
 	}
@@ -431,7 +458,9 @@ public class TicTacToe  implements Game
 				spots1[x]=false;
 				spots2[x]=false;
 			}
-		
+		int chance=randal.nextInt(10);
+		int luck=randal.nextInt(10);
+		if(chance==luck)shouldGoEasy=true;else shouldGoEasy=false;		
 		player1=true;
 	}
 
@@ -447,7 +476,13 @@ public class TicTacToe  implements Game
 	@Override
 	public void controlProcessor(int num) 
 	{
-		if(!gameOver())if(num==mc1.COMP_TURN)getNextMove(chooseSpot());
+		if(!gameOver())
+			if(num==mc1.COMP_TURN)			
+				if(!shouldGoEasy)getNextMove(chooseProSpot());
+				else getNextMove(chooseEasySpot());
+		if(game1())mc1.makeToast("Player 1 Wins!");
+		if(game2())mc1.makeToast("Player 2 Wins!");
+		if(tie())mc1.makeToast("The game is tied!");
 		
 	}
 
