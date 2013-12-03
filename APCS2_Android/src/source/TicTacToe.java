@@ -3,6 +3,8 @@ package source;
 
 import java.util.Random;
 
+import android.graphics.Color;
+
 
 public class TicTacToe  implements Game
 {
@@ -47,13 +49,17 @@ public class TicTacToe  implements Game
 			{
 				spots1[spot-1]=true;
 				mc1.buttonOn(spot);
+				mc1.numberButton[spot].setText("X");
+				mc1.numberButton[spot].setBackgroundColor(Color.RED);
 				places[spot-1]=1;
 			}
 			else 
 			{
 				
 				spots2[spot-1]=true;
-				mc1.buttonFlash(spot);
+				mc1.buttonOn(spot);
+				mc1.numberButton[spot].setText("O");
+				mc1.numberButton[spot].setBackgroundColor(Color.BLUE);
 				places[spot-1]=2;
 			}
 			
