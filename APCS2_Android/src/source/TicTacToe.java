@@ -468,7 +468,7 @@ public class TicTacToe  implements Game
 		int luck=randal.nextInt(10);
 		if(chance==luck)shouldGoEasy=true;else shouldGoEasy=false;		
 		player1=true;
-	}
+	}	
 
 	@Override
 	public void clickProcessor(int num) 
@@ -477,7 +477,7 @@ public class TicTacToe  implements Game
 		if(game1())mc1.makeToast("Player 1 Wins!");
 		if(game2())mc1.makeToast("Player 2 Wins!");
 		if(tie())mc1.makeToast("The game is tied!");
-	}
+	}	
 
 	@Override
 	public void controlProcessor(int num) 
@@ -486,6 +486,7 @@ public class TicTacToe  implements Game
 			if(num==mc1.COMP_TURN)			
 				if(!shouldGoEasy)getNextMove(chooseProSpot());
 				else getNextMove(chooseEasySpot());
+//		if(num==mc1.NEW_GAME){}
 		if(game1())mc1.makeToast("Player 1 Wins!");
 		if(game2())mc1.makeToast("Player 2 Wins!");
 		if(tie())mc1.makeToast("The game is tied!");

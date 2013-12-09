@@ -89,7 +89,7 @@ public class MerlinCore1 extends Activity {
 		newGamePending = false;
 		
 		if(buttonNum==NEW_GAME) 
-			newGamePending=true;
+			{resetButtons();newGamePending=true;}
 		else if(buttonNum==SAME_GAME)
 			startGame(activeGameNumber);
 		else if (validGameSelected()) //Hit Me -or- Comp Turn
